@@ -2,208 +2,208 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>Plataforma de Juegos</title>
+<title>Game Grid Chat</title>
 <style>
-/* estilos igual que antes */
-body { font-family: Arial, sans-serif; margin: 0; background: #ffc0cb; height: 100vh; display: flex; flex-direction: column; color: #000; }
-.hidden { display: none; }
-header { background: #333; color: #fff; text-align: center; padding: 15px; flex-shrink: 0; font-size:1.5em; letter-spacing:1px; }
-main { flex: 1; display: flex; flex-direction: column; align-items: center; overflow: hidden; }
-input { width: 80%; padding: 10px; margin: 10px 0; border-radius: 8px; border: 1px solid #ccc; font-size:1em; }
-button { padding: 10px 18px; border-radius: 8px; border: none; background: #28a745; color: #fff; cursor: pointer; font-size:1em; transition: 0.2s; }
-button:hover { background: #218838; }
-.login-box, .profile-box { background: #fff; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.25); width: 320px; text-align: center; margin-top:50px;}
-.games-box { display: flex; flex-wrap: wrap; gap: 25px; justify-content: center; margin-top: 20px; }
-.game-card { background: #fff; width: 200px; height: 120px; display: flex; align-items: center; justify-content: center; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.25); cursor: pointer; font-weight: bold; font-size: 18px; text-align: center; color:#000; transition: 0.3s; }
-.game-card:hover { transform: scale(1.05); background: #ffe6f0; }
-.profile-box img { width: 100px; height: 100px; border-radius: 50%; margin-bottom: 15px; border:2px solid #28a745; }
+body { font-family: Arial, sans-serif; margin:0; background:#ffc0cb; height:100vh; display:flex; flex-direction:column; color:#000; }
+.hidden { display:none; }
+header { background:#333; color:#fff; text-align:center; padding:15px; flex-shrink:0; font-size:1.5em; letter-spacing:1px; }
+main { flex:1; display:flex; flex-direction:column; align-items:center; overflow:auto; }
+
+input { width:80%; padding:10px; margin:10px 0; border-radius:8px; border:1px solid #ccc; font-size:1em; }
+button { padding:10px 18px; border-radius:8px; border:none; background:#28a745; color:#fff; cursor:pointer; font-size:1em; transition:0.2s; }
+button:hover { background:#218838; }
+
+.login-box, .profile-box { background:#fff; padding:25px; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.25); width:320px; text-align:center; margin-top:50px; }
+
+.games-box { display:flex; flex-wrap:wrap; gap:25px; justify-content:center; margin-top:20px; }
+.game-card { background:#fff; width:200px; height:120px; display:flex; align-items:center; justify-content:center; border-radius:12px; box-shadow:0 4px 10px rgba(0,0,0,0.25); cursor:pointer; font-weight:bold; font-size:18px; text-align:center; color:#000; transition:0.3s; }
+.game-card:hover { transform:scale(1.05); background:#ffe6f0; }
+
 #gameScreen { flex:1; width:100%; display:flex; flex-direction:column; }
-#chatContainer { flex:1; display: flex; flex-direction: column; width: 100%; }
-#chatMessages { flex: 1; overflow-y: auto; padding: 10px; background:#fff; margin: 10px; border-radius: 12px; box-shadow: inset 0 0 5px rgba(0,0,0,0.1); }
-.message { display: flex; margin-bottom: 8px; align-items:flex-start; }
-.message img { width: 45px; height: 45px; border-radius: 50%; margin-right: 8px; }
-.message-info { padding: 8px 12px; border-radius: 10px; flex: 1; background: #f1f1f1; color: #000; }
-.message-info strong { color: #000; }
-.message-info span { font-size: 0.75em; color: #666; margin-left: 4px; }
-.message-info p { margin: 3px 0 0; font-size: 0.95em; }
-.message.admin .message-info { background: #ffcccc; color: #900; font-weight:bold; }
-#chatInput { padding: 10px; border-radius: 8px; border: 1px solid #ccc; font-size:1em; width: calc(100% - 20px); margin: 0 10px 10px 10px; box-sizing: border-box; }
-#profileBtn, #backToGames, #supportBtn, #sendSupportBtn, #backToGamesFromSupport, #saveProfileBtn { margin-top: 20px; }
+#chatContainer { flex:1; display:flex; flex-direction:column; width:100%; }
+#chatMessages { flex:1; overflow-y:auto; padding:10px; background:#fff; margin:10px; border-radius:12px; box-shadow:inset 0 0 5px rgba(0,0,0,0.1); }
+.message { display:flex; margin-bottom:8px; align-items:flex-start; }
+.message img { width:45px; height:45px; border-radius:50%; margin-right:8px; }
+.message-info { padding:8px 12px; border-radius:10px; flex:1; background:#f1f1f1; color:#000; }
+.message-info strong { color:#000; }
+.message-info span { font-size:0.75em; color:#666; margin-left:4px; }
+.message-info p { margin:3px 0 0; font-size:0.95em; }
+.message.admin .message-info { background:#ffcccc; color:#900; font-weight:bold; }
+#chatInput { padding:10px; border-radius:8px; border:1px solid #ccc; font-size:1em; width:calc(100% - 20px); margin:0 10px 10px 10px; box-sizing:border-box; }
+
+#profileBtn, #backToGames, #supportBtn { margin-top:20px; }
+.profile-box img { width:100px; height:100px; border-radius:50%; margin-bottom:15px; border:2px solid #28a745; }
+.profile-box input { margin-bottom:10px; }
 </style>
 </head>
 <body>
-<header>
-<h1>Game Grid Chat</h1>
-</header>
+
+<header><h1>Game Grid Chat</h1></header>
 <main>
+
+<!-- Login -->
 <div id="loginScreen" class="login-box">
-    <h2>Iniciar Sesión</h2>
-    <input type="text" id="usernameInput" placeholder="Usuario">
-    <input type="password" id="passwordInput" placeholder="Contraseña">
-    <button id="loginBtn">Entrar</button>
+<h2>Iniciar Sesión</h2>
+<input type="text" id="usernameInput" placeholder="Usuario">
+<input type="password" id="passwordInput" placeholder="Contraseña">
+<button id="loginBtn">Entrar</button>
 </div>
+
+<!-- Perfil -->
 <div id="profileScreen" class="profile-box hidden">
-    <h2>Perfil</h2>
-    <img id="profileAvatar" src="https://i.pravatar.cc/80?img=5" alt="Avatar">
-    <input type="text" id="profileUsername" placeholder="Nombre de usuario">
-    <input type="text" id="profileAvatarInput" placeholder="URL de la nueva foto">
-    <button id="saveProfileBtn">Guardar Perfil</button>
+<h2>Perfil</h2>
+<img id="profileAvatar" src="https://i.pravatar.cc/80?img=5" alt="Avatar">
+<input type="text" id="profileUsername" placeholder="Nombre de usuario">
+<input type="text" id="profileAvatarInput" placeholder="URL de la nueva foto">
+<button id="saveProfileBtn">Guardar Perfil</button>
 </div>
+
+<!-- Juegos -->
 <div id="gamesScreen" class="hidden">
-    <div class="games-box">
-        <div class="game-card" data-game="game1">Rocket League</div>
-        <div class="game-card" data-game="game2">Fortnite</div>
-        <div class="game-card" data-game="game3">FIFA</div>
-        <div class="game-card" data-game="game4">Minecraft</div>
-        <div class="game-card" data-game="game5">Among Us</div>
-        <div class="game-card" data-game="game6">Call of Duty: Warzone</div>
-        <div class="game-card" data-game="game7">Valorant</div>
-        <div class="game-card" data-game="game8">League of Legends</div>
-        <div class="game-card" data-game="game9">Roblox</div>
-    </div>
-    <button id="profileBtn">Mi Perfil</button>
-    <button id="supportBtn">Soporte</button>
+<div class="games-box">
+<div class="game-card" data-game="game1">Rocket League</div>
+<div class="game-card" data-game="game2">Fortnite</div>
+<div class="game-card" data-game="game3">FIFA</div>
+<div class="game-card" data-game="game4">Minecraft</div>
+<div class="game-card" data-game="game5">Among Us</div>
+<div class="game-card" data-game="game6">Call of Duty: Warzone</div>
+<div class="game-card" data-game="game7">Valorant</div>
+<div class="game-card" data-game="game8">League of Legends</div>
+<div class="game-card" data-game="game9">Roblox</div>
 </div>
+<button id="profileBtn">Mi Perfil</button>
+<button id="supportBtn">Soporte</button>
+</div>
+
+<!-- Juego + Chat -->
 <div id="gameScreen" class="hidden">
-    <h2 id="gameTitle">Juego</h2>
-    <div id="chatContainer">
-        <div id="chatMessages"></div>
-        <input type="text" id="chatInput" placeholder="Escribe un mensaje y presiona Enter">
-    </div>
-    <button id="backToGames">Volver a Juegos</button>
+<h2 id="gameTitle">Juego</h2>
+<div id="chatContainer">
+<div id="chatMessages"></div>
+<input type="text" id="chatInput" placeholder="Escribe un mensaje y presiona Enter">
 </div>
+<button id="backToGames">Volver a Juegos</button>
+</div>
+
+<!-- Soporte -->
 <div id="supportScreen" class="hidden profile-box">
-    <h2>Soporte</h2>
-    <p>Escribe tu mensaje al soporte. No podrás ver mensajes de otros usuarios.</p>
-    <input type="text" id="supportInput" placeholder="Escribe tu mensaje">
-    <button id="sendSupportBtn">Enviar</button>
-    <button id="backToGamesFromSupport">Volver a Juegos</button>
+<h2>Soporte</h2>
+<p>Escribe tu mensaje al soporte. No podrás ver mensajes de otros usuarios.</p>
+<input type="text" id="supportInput" placeholder="Escribe tu mensaje">
+<button id="sendSupportBtn">Enviar</button>
+<button id="backToGamesFromSupport">Volver a Juegos</button>
 </div>
+
 </main>
+
+<!-- Socket.IO -->
+<script src="/socket.io/socket.io.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', function() {
-    let currentUser = '';
-    let currentAvatar = 'https://i.pravatar.cc/40?img=5';
-    let currentPlatform = 'Web';
-    const adminUsers = ['Gamba_jr12','DAVID2025.'];
-    let currentGame = '';
-    let chatData = JSON.parse(localStorage.getItem('chatData')) || {
-        game1:[], game2:[], game3:[], game4:[], game5:[], game6:[], game7:[], game8:[], game9:[]
-    };
-    let supportMessages = JSON.parse(localStorage.getItem('supportMessages')) || [];
+const socket = io();
 
-    const userPlatforms = { 'Usuario1':'PC','Usuario2':'PlayStation','Usuario3':'Switch','Usuario4':'Móvil','Usuario5':'Xbox' };
+let currentUser = '';
+let currentAvatar = 'https://i.pravatar.cc/40?img=5';
+let currentGame = '';
 
-    function cleanOldMessages() {
-        const now = Date.now();
-        const oneHour = 60 * 60 * 1000;
-        Object.keys(chatData).forEach(game => {
-            chatData[game] = chatData[game].filter(msg => now - msg.timestamp < oneHour);
-        });
-        localStorage.setItem('chatData', JSON.stringify(chatData));
-    }
-
-    function renderChat(){
-        cleanOldMessages();
-        const chatMessages = document.getElementById('chatMessages');
-        chatMessages.innerHTML = '';
-        if(!currentGame) return;
-        if(!chatData[currentGame]) chatData[currentGame] = [];
-        chatData[currentGame].forEach(msg=>{
-            let displayName = msg.username;
-            let platformText = msg.platform;
-            let isAdmin = adminUsers.includes(msg.username);
-            if(isAdmin){ displayName='ADMIN'; platformText=''; }
-            const div = document.createElement('div');
-            div.className='message'+(isAdmin?' admin':'');
-            div.innerHTML=`<img src='${msg.avatar}' alt='avatar'><div class='message-info'><strong>${displayName}</strong>${platformText?`<span>${platformText}</span>`:''}<p>${msg.text} <span>${msg.time}</span></p></div>`;
-            chatMessages.appendChild(div);
-        });
-        chatMessages.scrollTop = chatMessages.scrollHeight;
-    }
-
-    document.getElementById('loginBtn').addEventListener('click',()=>{
-        const usernameInput = document.getElementById('usernameInput').value.trim();
-        const passwordInput = document.getElementById('passwordInput').value.trim();
-        if(usernameInput===''||passwordInput==='') return alert('Ingresa usuario y contraseña');
-        currentUser = usernameInput;
-        currentAvatar = 'https://i.pravatar.cc/40?img=5';
-        currentPlatform = userPlatforms[currentUser] || 'Web';
-        document.getElementById('loginScreen').classList.add('hidden');
-        document.getElementById('gamesScreen').classList.remove('hidden');
+// Renderizar mensajes con admin
+function renderChat(messages){
+    const chatMessages = document.getElementById('chatMessages');
+    chatMessages.innerHTML = '';
+    messages.forEach(msg=>{
+        const isAdmin = (msg.username === 'Gamba_jr12'); // <-- usuario admin
+        const displayName = isAdmin ? 'ADMIN' : msg.username;
+        const div = document.createElement('div');
+        div.className = 'message' + (isAdmin ? ' admin' : '');
+        div.innerHTML = `
+            <img src="${msg.avatar}" alt="avatar">
+            <div class='message-info'>
+                <strong>${displayName}</strong>
+                <p>${msg.text} <span>${new Date(msg.timestamp).toLocaleTimeString()}</span></p>
+            </div>
+        `;
+        chatMessages.appendChild(div);
     });
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+}
 
-    document.getElementById('profileBtn').addEventListener('click',()=>{
+// Login
+document.getElementById('loginBtn').addEventListener('click',()=>{
+    const username = document.getElementById('usernameInput').value.trim();
+    if(username==='') return alert('Ingresa un usuario');
+    currentUser = username;
+    document.getElementById('loginScreen').classList.add('hidden');
+    document.getElementById('gamesScreen').classList.remove('hidden');
+});
+
+// Perfil
+document.getElementById('profileBtn').addEventListener('click',()=>{
+    document.getElementById('gamesScreen').classList.add('hidden');
+    document.getElementById('profileScreen').classList.remove('hidden');
+    document.getElementById('profileUsername').value=currentUser;
+    document.getElementById('profileAvatarInput').value=currentAvatar;
+    document.getElementById('profileAvatar').src=currentAvatar;
+});
+document.getElementById('saveProfileBtn').addEventListener('click',()=>{
+    const name = document.getElementById('profileUsername').value.trim();
+    const avatar = document.getElementById('profileAvatarInput').value.trim();
+    if(name!=='') currentUser=name;
+    if(avatar!=='') currentAvatar=avatar;
+    document.getElementById('profileScreen').classList.add('hidden');
+    document.getElementById('gamesScreen').classList.remove('hidden');
+});
+
+// Juegos
+document.querySelectorAll('.game-card').forEach(card=>{
+    card.addEventListener('click',()=>{
+        currentGame = card.getAttribute('data-game');
         document.getElementById('gamesScreen').classList.add('hidden');
-        document.getElementById('profileScreen').classList.remove('hidden');
-        document.getElementById('profileUsername').value=currentUser;
-        document.getElementById('profileAvatarInput').value=currentAvatar;
-        document.getElementById('profileAvatar').src=currentAvatar;
+        document.getElementById('gameScreen').classList.remove('hidden');
+        document.getElementById('gameTitle').textContent = card.textContent;
+        socket.emit('joinGame', currentGame);
     });
+});
 
-    document.getElementById('saveProfileBtn').addEventListener('click',()=>{
-        const newUsername = document.getElementById('profileUsername').value.trim();
-        const newAvatar = document.getElementById('profileAvatarInput').value.trim();
-        if(newUsername!=='') currentUser=newUsername;
-        if(newAvatar!=='') currentAvatar=newAvatar;
-        localStorage.setItem('currentUser', currentUser);
-        localStorage.setItem('currentAvatar', currentAvatar);
-        document.getElementById('profileScreen').classList.add('hidden');
-        document.getElementById('gamesScreen').classList.remove('hidden');
-    });
+// Volver a juegos
+document.getElementById('backToGames').addEventListener('click',()=>{
+    document.getElementById('gameScreen').classList.add('hidden');
+    document.getElementById('gamesScreen').classList.remove('hidden');
+});
 
-    document.querySelectorAll('.game-card').forEach(card=>{
-        card.addEventListener('click',()=>{
-            currentGame = card.getAttribute('data-game');
-            document.getElementById('gamesScreen').classList.add('hidden');
-            document.getElementById('gameScreen').classList.remove('hidden');
-            document.getElementById('gameTitle').textContent = card.textContent;
-            renderChat();
+// Soporte
+document.getElementById('supportBtn').addEventListener('click',()=>{
+    document.getElementById('gamesScreen').classList.add('hidden');
+    document.getElementById('supportScreen').classList.remove('hidden');
+    document.getElementById('supportInput').value='';
+});
+document.getElementById('sendSupportBtn').addEventListener('click',()=>{
+    const msg = document.getElementById('supportInput').value.trim();
+    if(msg==='') return alert('Escribe un mensaje');
+    alert('Mensaje enviado al soporte');
+    document.getElementById('supportInput').value='';
+});
+document.getElementById('backToGamesFromSupport').addEventListener('click',()=>{
+    document.getElementById('supportScreen').classList.add('hidden');
+    document.getElementById('gamesScreen').classList.remove('hidden');
+});
+
+// Socket.IO
+socket.on('chatUpdate',(messages)=>{
+    renderChat(messages);
+});
+
+document.getElementById('chatInput').addEventListener('keypress',function(e){
+    if(e.key==='Enter' && this.value.trim()!==''){
+        socket.emit('newMessage',{
+            game: currentGame,
+            username: currentUser,
+            avatar: currentAvatar,
+            text: this.value,
+            timestamp: Date.now()
         });
-    });
-
-    document.getElementById('backToGames').addEventListener('click',()=>{
-        document.getElementById('gameScreen').classList.add('hidden');
-        document.getElementById('gamesScreen').classList.remove('hidden');
-    });
-
-    document.getElementById('chatInput').addEventListener('keypress',function(e){
-        if(e.key==='Enter' && this.value.trim()!==''){
-            let platform = currentPlatform;
-            if(adminUsers.includes(currentUser)) platform='';
-            const now = new Date();
-            const timeString = now.getHours().toString().padStart(2,'0')+':'+now.getMinutes().toString().padStart(2,'0');
-            const newMsg={username:currentUser, avatar:currentAvatar, platform:platform, text:this.value, time:timeString, timestamp:Date.now()};
-            if(!chatData[currentGame]) chatData[currentGame]=[];
-            chatData[currentGame].push(newMsg);
-            cleanOldMessages();
-            this.value='';
-            renderChat();
-        }
-    });
-
-    document.getElementById('supportBtn').addEventListener('click',()=>{
-        document.getElementById('gamesScreen').classList.add('hidden');
-        document.getElementById('supportScreen').classList.remove('hidden');
-        document.getElementById('supportInput').value='';
-    });
-
-    document.getElementById('sendSupportBtn').addEventListener('click',()=>{
-        const msg = document.getElementById('supportInput').value.trim();
-        if(msg==='') return alert('Escribe un mensaje antes de enviar');
-        supportMessages.push({user:currentUser, text:msg, avatar:currentAvatar, time:new Date().toLocaleTimeString()});
-        localStorage.setItem('supportMessages', JSON.stringify(supportMessages));
-        alert('Mensaje enviado al soporte');
-        document.getElementById('supportInput').value='';
-    });
-
-    document.getElementById('backToGamesFromSupport').addEventListener('click',()=>{
-        document.getElementById('supportScreen').classList.add('hidden');
-        document.getElementById('gamesScreen').classList.remove('hidden');
-    });
-
-    cleanOldMessages(); // limpiar al iniciar la página
+        this.value='';
+    }
 });
 </script>
+
 </body>
 </html>
